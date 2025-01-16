@@ -1,9 +1,13 @@
 const express = require("express");
-const { adminAuth } = require("./middleware/adminAuth")
+const { adminAuth, userAuth } = require("./middleware/adminAuth")
 
 const app = express();
 
 app.use("/admin", adminAuth);
+
+app.get("/user", userAuth, (req, res) => {
+    res.send("get data from user request handler!");
+});
 
 app.get("/admin/getAllUser", (req, res) => {
   res.send("Data fetched successfully!");
