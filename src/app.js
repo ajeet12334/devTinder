@@ -1,17 +1,9 @@
 const express = require("express");
+const { adminAuth } = require("./middleware/adminAuth")
 
 const app = express();
 
-app.use("/admin", (req, res, next) => {
-  console.log("Checking autherization");
-  const token = "qwerty";
-  const isAutherised = token === "qwerty";
-  if (!isAutherised) {
-    res.send("user is not autherized!");
-  } else {
-    next();
-  }
-});
+app.use("/admin", adminAuth);
 
 app.get("/admin/getAllUser", (req, res) => {
   res.send("Data fetched successfully!");
