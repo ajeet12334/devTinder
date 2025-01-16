@@ -1,26 +1,26 @@
-const express = require("express")
+const express = require("express");
 
-const app = express()
+const app = express();
 
-app.get("/user/:userId/:userName",(req, res) => {
-    //console.log("Request query",req.query)
-    console.log("Request params",req.params)
-    res.send({"name": "Ajeet", "area": "jodhpur"})
-})
+app.use("/admin", (req, res, next) => {
+  console.log("Checking autherization");
+  const token = "qwerty";
+  const isAutherised = token === "qwerty";
+  if (!isAutherised) {
+    res.send("user is not autherized!");
+  } else {
+    next();
+  }
+});
 
-app.post("/user", (req, res)=> {
-    //data will come in req and same to db
-    res.send("Data saved successfully")
-})
+app.get("/admin/getAllUser", (req, res) => {
+  res.send("Data fetched successfully!");
+});
 
-app.delete("/user", (req, res)=> {
-    res.send("Data deleted successfully")
-})
-
-app.use("/test",(req, res) => {
-    res.send("Namaste from the test path")
-})
+app.get("/admin/deleteUser", (req, res) => {
+  res.send("User Deleted!");
+});
 
 app.listen(7777, () => {
-    console.log("Server started")
-})
+  console.log("Server started");
+});
